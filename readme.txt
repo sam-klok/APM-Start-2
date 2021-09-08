@@ -13,7 +13,7 @@ While working on it, I had and issue (below), and added answer on Stack Overflow
 Could not find module "@angular-devkit/build-angular"
 https://stackoverflow.com/questions/50333003/could-not-find-module-angular-devkit-build-angular
 
-My answere (as a commment, because I don't have enough rating to answer):
+My answer (as a commment, because I don't have enough rating to answer):
 Do you have folder node_modules ? For me the same error happened, 
 when I cloned my Angular project through GitHub on different laptop. 
 I didn't push folder node_modules to save space. 
