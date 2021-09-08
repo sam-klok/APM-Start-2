@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IProduct } from '../product';
 
 @Component({
   selector: 'pm-product-list',
@@ -10,8 +11,27 @@ export class ProductListComponent implements OnInit {
   imageWidth:number = 50;
   imageMargin:number = 2;
   showImage: boolean = true;
-  listFilter: string = 'cart';
-  products: any[] = [
+
+  private _listFilter : string = '';
+  public get listFilter() : string {
+    return this._listFilter;
+  }
+  public set listFilter(v : string) {
+    this._listFilter = v;
+    console.log('in list filter seter');
+    this.filteredProducts = this.performFilter(v);
+  }
+
+  performFilter(filterBy: string): IProduct[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.products.filter(
+      (product:IProduct)=>product.productName.toLocaleLowerCase().includes(filterBy)
+    );
+  }
+
+
+  filteredProducts: IProduct[] = [];
+  products: IProduct[] = [
     {
       "productId":2,
       "productName": "Garden Cart",
@@ -41,6 +61,13 @@ export class ProductListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log("I'm in the ngOnInit now.");
+    this.listFilter = 'cart';
+  }
+
+  onRatingClicked(message: string): void {
+    this.pageTitle = 'Product List: ' + message;
+    console.log('star property clicked ' + message);
   }
 
 }
