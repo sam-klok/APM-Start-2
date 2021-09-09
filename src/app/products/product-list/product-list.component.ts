@@ -1,17 +1,20 @@
 import { ProductService } from './../product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IProduct } from '../product';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'pm-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle: string='Product List';
   imageWidth:number = 50;
   imageMargin:number = 2;
   showImage: boolean = true;
+  errorMessage: string = '';
+  sub: Subscription | undefined;
 
   private _listFilter : string = '';
   public get listFilter() : string {
@@ -44,16 +47,6 @@ export class ProductListComponent implements OnInit {
   //     "starRating": 4.2,
   //     "imageUrl": "assets/images/garden_cart.png"
   //   },
-  //   {
-  //     "productId":5,
-  //     "productName": "Hammer",
-  //     "productCode": "TBX-048",
-  //     "releaseDate": "10/1/2021",
-  //     "description": "Curved hammer",
-  //     "price": 8.9,
-  //     "starRating": 4.8,
-  //     "imageUrl": "assets/images/hammer.png"
-  //   },
   // ];
 
   toggleImage(): void {
@@ -64,9 +57,22 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("I'm in the ngOnInit now.");
-    //this.listFilter = 'cart';
-    this.products = this.productService.getProducts();
-    this.filteredProducts = this.products;
+
+    this.sub = 
+      this.productService.getProducts().subscribe({
+      next: products => {
+        this.products = products,
+        this.filteredProducts = this.products;
+      },
+      error: err => this.errorMessage = err,
+    });
+
+    //this.products = this.productService.getProductsOld();
+    //this.filteredProducts = this.products;
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 
   onRatingClicked(message: string): void {

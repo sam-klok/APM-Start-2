@@ -1,11 +1,36 @@
 import { IProduct } from './product';
 import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProductService{
-    getProducts(): IProduct[]{
+  private productUrl = 'api/products/products.json';  // pretend to be URL
+
+  constructor(private http: HttpClient){
+  }
+
+  getProducts(): Observable<IProduct[]>{
+    return this.http.get<IProduct[]>(this.productUrl).pipe(
+      tap(data=>console.log('All', JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
+
+  handleError(err: HttpErrorResponse) {
+    if (err.error instanceof ErrorEvent){
+      console.error(err.error.message);
+      return throwError(err.error.message);
+    } 
+
+    console.error(`Status: ${err.status}`);
+    return throwError(`Status: ${err.status}`);
+  }
+
+  getProductsOld(): IProduct[] {
         return [
             {
               "productId": 1,
@@ -58,5 +83,5 @@ export class ProductService{
               "imageUrl": "assets/images/xbox-controller.png"
             }
           ];
-    }
+        }
 }
