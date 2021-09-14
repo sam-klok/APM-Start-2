@@ -10,12 +10,14 @@ import { WelcomeComponent } from './home/welcome.component';
 import { RouterModule } from '@angular/router';
 import { ProductsDetailGuard } from './products/products-detail.guard';
 import { ProductModule } from './products/product.module';
+import { CtestComponent } from './ctest/ctest.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     ProductsComponent,
+    CtestComponent,
 
   ],
   imports: [

@@ -22,3 +22,22 @@ but copy node_modules folder from different project on the same laptop.
 And it worked!
 
 
+
+FYI: I used Angular 11 for this application. 
+
+>ng version
+Your global Angular CLI version (12.2.5) is greater than your local version (11.2.5). The local Angular CLI version is used.
+
+To disable this warning use "ng config -g cli.warnings.versionMismatch false".
+
+     _                      _                 ____ _     ___
+    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+   / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+ /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+                |___/
+    
+
+Angular CLI: 11.2.5
+Node: 14.15.3
+OS: win32 x64
